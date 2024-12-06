@@ -22,9 +22,9 @@ col_len = len(grid)
 key_len = len(key)
 
 #horizontal
-"""
-for row in range(len(grid)):
-    for column in range(row_len - key_len):
+
+for row in range(col_len):
+    for column in range(row_len - key_len + 1):
         letter_for = ""
         for i in range(key_len):
             letter_for += grid[row][column + i]
@@ -35,10 +35,11 @@ for row in range(len(grid)):
             letter_bac += grid[row][row_len - 1 - column - i]
         if letter_bac == key:
             count += 1
-"""
-#vertical
+
+#vertical 
+
 for column in range(row_len):
-    for row in range(col_len - key_len):
+    for row in range(col_len - key_len + 1):
         letter_for = ""
         for i in range(key_len):
             letter_for += grid[row + i][column]
@@ -50,26 +51,34 @@ for column in range(row_len):
         if letter_bac == key:
             count += 1
 
-#diagonal forwards
-for row in range(col_len):
-    for column in range(row_len - key_len):
+
+#diagonal
+
+for row in range(col_len - key_len + 1):
+    for column in range(row_len - key_len + 1):
+
         letter_for_up = ""
         for i in range(key_len):
             letter_for_up += grid[col_len - 1 - row - i][column + i]
         if letter_for_up == key:
             count += 1
+
         letter_for_down = ""
         for i in range(key_len):
-            letter_for_down += grid[row + i][column + 1]
+            letter_for_down += grid[row + i][column + i]
         if letter_for_down == key:
             count += 1
+
         letter_bac_up = ""
         for i in range(key_len):
             letter_bac_up += grid[col_len - 1 - row - i][row_len - 1 - column - i]
         if letter_bac_up == key:
             count += 1
+        
         letter_bac_down = ""
         for i in range(key_len):
             letter_bac_down += grid[row + i][row_len - 1 - column - i]
         if letter_bac_down == key:
             count += 1
+
+print(count)
