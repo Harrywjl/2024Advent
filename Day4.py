@@ -5,6 +5,7 @@ def get_file_data(file_name):
         data.append(line.rstrip())
     return data
 
+
 file_data = get_file_data("Day4Input.txt")
 
 # build a 2D List based on the file_data
@@ -15,13 +16,16 @@ for line in file_data:
         row.append(letter)
     grid.append(row)
 
+
+#Part 1
+"""
 count = 0
 key = "XMAS"
 row_len = len(grid[0])
 col_len = len(grid)
 key_len = len(key)
 
-#horizontal
+# horizontal
 
 for row in range(col_len):
     for column in range(row_len - key_len + 1):
@@ -36,7 +40,7 @@ for row in range(col_len):
         if letter_bac == key:
             count += 1
 
-#vertical 
+# vertical 
 
 for column in range(row_len):
     for row in range(col_len - key_len + 1):
@@ -51,8 +55,7 @@ for column in range(row_len):
         if letter_bac == key:
             count += 1
 
-
-#diagonal
+# diagonal
 
 for row in range(col_len - key_len + 1):
     for column in range(row_len - key_len + 1):
@@ -74,11 +77,51 @@ for row in range(col_len - key_len + 1):
             letter_bac_up += grid[col_len - 1 - row - i][row_len - 1 - column - i]
         if letter_bac_up == key:
             count += 1
-        
+
         letter_bac_down = ""
         for i in range(key_len):
             letter_bac_down += grid[row + i][row_len - 1 - column - i]
         if letter_bac_down == key:
+            count += 1
+"""
+#Part 2
+
+count = 0
+key = "MAS"
+row_len = len(grid[0])
+col_len = len(grid)
+key_len = len(key)
+
+
+for row in range(1, col_len - 1):
+    for column in range(1, row_len - 1):
+        mas_count = 0
+
+        letter_for_up = ""
+        for i in range(key_len):
+            letter_for_up += grid[row - i + 1][column + i - 1]
+        if letter_for_up == key:
+            mas_count += 1
+
+        letter_for_down = ""
+        for i in range(key_len):
+            letter_for_down += grid[row + i - 1][column + i - 1]
+        if letter_for_down == key:
+            mas_count += 1
+
+        letter_bac_up = ""
+        for i in range(key_len):
+            letter_bac_up += grid[row - i + 1][column - i + 1]
+        if letter_bac_up == key:
+            mas_count += 1
+
+        letter_bac_down = ""
+        for i in range(key_len):
+            letter_bac_down += grid[row + i - 1][column - i + 1]
+        if letter_bac_down == key:
+            mas_count += 1
+
+        if mas_count == 2:
             count += 1
 
 print(count)
