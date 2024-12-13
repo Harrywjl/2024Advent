@@ -19,13 +19,11 @@ def get_indexes(search_num, search_list):
     return indexes_list
 
 
-def comes_after(cur_page, cur_index, rule_indexes):
-    cur_num = cur_page[cur_index]
+def comes_before(cur_page, cur_index, rule_indexes):
     rules = []
     for y in rule_indexes:
-        rules.append(x_rule[y])
-
-    for index in range(cur_index + 1, len(cur_page)):
+        rules.append(y_rule[y])
+    for index in range(0, cur_index):
         elements_before = cur_page[index]
         for r in rules:
             if elements_before == r:
@@ -33,13 +31,11 @@ def comes_after(cur_page, cur_index, rule_indexes):
     return False
 
 
-def comes_before(cur_page, cur_index, rule_indexes):
-    cur_num = cur_page[cur_index]
+def comes_after(cur_page, cur_index, rule_indexes):
     rules = []
     for x in rule_indexes:
-        rules.append(y_rule[x])
-
-    for index in range(0, cur_index):
+        rules.append(x_rule[x])
+    for index in range(cur_index + 1, len(cur_page)):
         elements_after = cur_page[index]
         for r in rules:
             if elements_after == r:
@@ -73,21 +69,19 @@ for page in pages:
     while i < len(page):
         num = int(page[i])
 
-        # check if everything that comes AFTER this number is valid
-        #x_indexes contain the indexes of the rules in x_rule that is equal to num
-        x_indexes = get_indexes(num, x_rule)
-        if comes_after(page, i, x_indexes):
-            valid = False
-            print(str(page) + " is invalid (x) at index " + str(i))
-            print()
-            break
         # check if everything that comes BEFORE this number is valid
-        # y_indexes contain the indexes of the rules in y_rule that is equal to num
-        y_indexes = get_indexes(num, y_rule)
-        if comes_before(page, i, y_indexes):
+        # x_indexes contain the indexes of the rules in x_rule that is equal to num
+        # check if the y equivalent comes before the number
+        x_indexes = get_indexes(num, x_rule)
+        if comes_before(page, i, x_indexes):
             valid = False
-            print(str(page) + " is invalid (y) at index " + str(i))
-            print()
+            break
+        # check if everything that comes AFTER this number is valid
+        # y_indexes contain the indexes of the rules in y_rule that is equal to num
+        # check if the x equivalent comes before the number
+        y_indexes = get_indexes(num, y_rule)
+        if comes_after(page, i, y_indexes):
+            valid = False
             break
 
         i += 1
@@ -97,7 +91,6 @@ for page in pages:
 
 # Takes the middle values of all the valid pages and sums them up
 for page in valid_pages:
-    print(str(page))
     middle_pages += page[math.floor(len(page) / 2)]
 
 print(middle_pages)
