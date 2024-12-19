@@ -1,4 +1,5 @@
 import math
+from functools import cache
 
 
 def get_file_data(file_name):
@@ -8,27 +9,35 @@ def get_file_data(file_name):
         data.append(line.rstrip())
     return data
 
+
 def binary_to_list(binary, total_operators):
     op_list = []
+    total = binary
     for i in range(total_operators):
-        x = total_operators - i
-        print("binary: " + str(binary))
-        print("2 to the power of " + str(x) + " = " + str(math.pow(2, x)))
-        print(str(math.floor(binary / math.pow(2, x)) >= 1))
-        if math.floor(binary / math.pow(2, x)) >= 1:
+        x = total_operators - i - 1
+        if math.floor(total / math.pow(2, x)) >= 1:
             op_list.insert(0, 1)
+            total %= math.pow(2, x)
         else:
             op_list.insert(0, 0)
-    print()
     return op_list
 
 
-#test
-print(str(binary_to_list(15, 5)))
+"""@cache
+def takeAndSkip(targetSum, nums, currentNum):
+    if currentNum == targetSum:
+        return True
+
+    if currentNum > targetSum: return False
+
+    for i in range(0, len(nums), 1):
+        if takeAndSkip(targetSum, nums, currentNum * nums[i]) or takeAndSkip(targetSum, nums, currentNum + nums[i]): return True
+
+    return False"""
 
 
 file_data = get_file_data("Day7Input.txt")
-sum = 0
+final_sum = 0
 for i in file_data:
     line = i.split(" ")
 
@@ -39,13 +48,23 @@ for i in file_data:
 
     target_binary = int(math.pow(2, total_operators))
 
-    """for binary in range(target_binary):
+    for binary in range(target_binary):
+        num = int(line[0])
         # A list of 1's and 0's to sub as * or + respectively
-        operator_list = binary_to_list(binary, total_operators)
-        print(operator_list)"""
+        """operator_list = binary_to_list(binary, total_operators)
+        for x in range(len(operator_list)):
+            operations = operator_list[x]
+            if operations == 0:
+                final_sum += int(line[x + 1])
+            else:
+                final_sum *= int(line[x + 1])"""
+        print(str(target_num))
+        print(str(num))
+        print()
+        if takeAndSkip(target_num, line, 0):
+            final_sum += target_num
+        """if num == target_num:
+            final_sum += target_num"""
 
 
-    """print(str(target_num))
-    print(str(line))
-    print(str(target_binary))
-    print()"""
+print(str(final_sum))
