@@ -51,20 +51,17 @@ for i in file_data:
     for binary in range(target_binary):
         num = int(line[0])
         # A list of 1's and 0's to sub as * or + respectively
-        """operator_list = binary_to_list(binary, total_operators)
+        operator_list = binary_to_list(binary, total_operators)
         for x in range(len(operator_list)):
             operations = operator_list[x]
             if operations == 0:
-                final_sum += int(line[x + 1])
+                num += int(line[x + 1])
             else:
-                final_sum *= int(line[x + 1])"""
-        print(str(target_num))
-        print(str(num))
-        print()
-        if takeAndSkip(target_num, line, 0):
+                num *= int(line[x + 1])
+        if num == target_num:
             final_sum += target_num
-        """if num == target_num:
+            break
+        """if takeAndSkip(target_num, line, 0):
             final_sum += target_num"""
-
 
 print(str(final_sum))
